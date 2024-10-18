@@ -1,6 +1,6 @@
 {
   "name": "@nkticket/common",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "files": [
@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "del ./build/*",
     "build": "npm run clean && tsc",
-    "pub" : "git add . && git commit -m \"made update to package using script\" && npm version patch && npm run build && npm publish"
+    "pub": "git add . && git commit -m \"made update to package using script\" && npm version patch && npm run build && npm publish"
   },
   "keywords": [],
   "author": "",
