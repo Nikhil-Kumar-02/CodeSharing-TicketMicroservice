@@ -1,13 +1,13 @@
 {
   "name": "@nkticket/common",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./build/index.js",
-  "types" : "./build/index.d.ts",
+  "types": "./build/index.d.ts",
   "files": [
     "build/**/*"
   ],
   "scripts": {
-    "clean" : "del ./build/*",
+    "clean": "del ./build/*",
     "build": "npm run clean && tsc"
   },
   "keywords": [],
