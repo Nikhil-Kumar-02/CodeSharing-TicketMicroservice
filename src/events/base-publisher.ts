@@ -16,11 +16,9 @@ export abstract class Publisher<T extends Event>{
     this.producer = kafka.producer();
   }
   
-  sendToClient = async (topic:T["subject"] , message:T["data"]) => {
-    await this.producer.send({
-      topic,
-      messages: [{ value: JSON.stringify(message) }],
-    });
+  async connectProducer() {
+    await this.producer.connect();
+    console.log("Producer connected ");
   }
 
   setupTopic = async () => {
@@ -37,19 +35,20 @@ export abstract class Publisher<T extends Event>{
     await this.client.disconnect();
   }
 
-  publishMessage = async (message:T["data"]) => {
+  async publishMessage(message: T["data"]) {
     try {
-      await this.setupTopic();          
-      await this.producer.connect();
-      
-      const topic = this.topicName;
-
-      this.sendToClient(this.topicName , message);
-      console.log(`Published message to ${topic}:` , message);
+      await this.producer.send({
+        topic: this.topicName,
+        messages: [{ value: JSON.stringify(message) }],
+      });
+      console.log(`Published message to ${this.topicName}:`, message);
     } catch (error) {
       console.error("Error in publishing:", error);
-    } finally {
-      await this.producer.disconnect();
     }
+  }
+
+  async disconnectProducer() {
+    await this.producer.disconnect();
+    console.log("Producer disconnected");
   }
 } 
