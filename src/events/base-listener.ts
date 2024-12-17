@@ -9,7 +9,7 @@ interface Event{
 export abstract class Listener<T extends Event>{
   abstract topicName : T["subject"];
   abstract groupName : string;
-  abstract logReceivedData(data : T["data"] , topic: string,partition: number) : void;
+  abstract logReceivedData(data : T["data"] , topic: string,partition: number) : Promise<void>;
   abstract validateMessage(data: any): data is T["data"];
   abstract consumer : Consumer;
 
@@ -35,7 +35,7 @@ export abstract class Listener<T extends Event>{
               const parsedData: unknown = JSON.parse(dataString);
               
               if (this.validateMessage(parsedData)) {
-                this.logReceivedData(parsedData, topic, partition);
+                await this.logReceivedData(parsedData, topic, partition);
               } else {
                 console.error("Invalid message format:", parsedData);
               }
